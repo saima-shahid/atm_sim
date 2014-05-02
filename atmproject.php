@@ -18,11 +18,17 @@ content="text/html; charset=iso-8859-1" />
 $Total = 0;
 $initial_total = 0;
 
-//Currency Breakdown
-$Currency =array(50,20);
 
 //Number of currency notes 
-$Currency_amount = array(50=>5,20=>5);
+$Currency_amount = array(
+					50=>8,  //Number of $50 notes
+					20=>5   //Number of $20 notes
+					);
+
+//Currency note used
+foreach(array_keys($Currency_amount) as $key){
+    $Currency[] = $key;
+}
 
 //Calculating Total money present in ATM
 foreach($Currency_amount as $k=>$v)
@@ -34,10 +40,14 @@ $initial_total = $Total;
 
 ?>
 <p>Initial Total : <?=$initial_total?><br/>
-Currency available initially : <br/><?php foreach($Currency_amount as $x=>$y)
+
+<?php 
+
+foreach($Currency_amount as $x=>$y)
 {
 	echo "$".$x." Bills : ".$y."<br/>";
 }
+
 ?>
 </p>
 
