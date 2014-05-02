@@ -32,7 +32,16 @@ foreach($Currency_amount as $k=>$v)
 
 $initial_total = $Total;
 
+?>
+<p>Initial Total : <?=$initial_total?><br/>
+Currency available initially : <br/><?php foreach($Currency_amount as $x=>$y)
+{
+	echo "$".$x." Bills : ".$y."<br/>";
+}
+?>
+</p>
 
+<?php
 if(isset($_GET['Payment']))
 {
 	$change = '';
@@ -75,7 +84,8 @@ if(isset($_GET['Payment']))
 		{
 			foreach($itemsOfEach as $key=>$value)
 			{	
-				$change .= "$".$key." Bills : ".$value."<br />";
+				$Currency_amount[$key] = $Currency_amount[$key] - $value; 
+				$change .= "$".$key." Bills : ".$value." (".$Currency_amount[$key]." left)<br />";
 			}
 
 			$Total = $Total-$Withdraw;
@@ -84,15 +94,11 @@ if(isset($_GET['Payment']))
 	else
 	{
 		$change = "Not enough currency in ATM.";
-	}
-	
-	echo "<br />Available Amount : ".$Total;
-		
+	}		
 }
 
 ?>
 
-<p>Initial Total : <?=$initial_total?></p>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="get" enctype="applicatio/x-www-form-urlencoded">
 <p>Withdraw :<input type="text" name="Payment" value="<?php if(isset($_GET['Payment'])){echo $_GET['Payment'];} ?>"></p><p><input type="Submit" value="Withdraw"></p>
 </form><hr/>
@@ -102,6 +108,7 @@ if(isset($_GET['Payment']))
 	{
 		echo $change;
 	}
+	echo "<br />Available Amount : ".$Total;
 ?>
 </body>
 </html>
