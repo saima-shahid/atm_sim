@@ -15,25 +15,28 @@ content="text/html; charset=iso-8859-1" />
 
 <?php
 
+$Total = 0;
+$initial_total = 0;
+
+//Currency Breakdown
+$Currency =array(50,20);
+
+//Number of currency notes 
+$Currency_amount = array(50=>5,20=>5);
+
+//Calculating Total money present in ATM
+foreach($Currency_amount as $k=>$v)
+{
+	$Total += ($k * $v);
+}
+
+$initial_total = $Total;
+
+
 if(isset($_GET['Payment']))
 {
-	$Total = 0;
 	$change = '';
-
-	//Currency Breakdown
-	$Currency =array(50,20);
-
-	//Number of currency notes 
-	$Currency_amount = array(50=>5,20=>5);
-
-	foreach($Currency_amount as $k=>$v)
-	{
-		$Total += ($k * $v);
-	}
-
-	echo "Total Amount : ".$Total;
-
-		
+	
 	$Payment = $_GET['Payment'];
 	$Withdraw = $Payment;
 
@@ -89,7 +92,7 @@ if(isset($_GET['Payment']))
 
 ?>
 
-
+<p>Initial Total : <?=$initial_total?></p>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="get" enctype="applicatio/x-www-form-urlencoded">
 <p>Withdraw :<input type="text" name="Payment" value="<?php if(isset($_GET['Payment'])){echo $_GET['Payment'];} ?>"></p><p><input type="Submit" value="Withdraw"></p>
 </form><hr/>
